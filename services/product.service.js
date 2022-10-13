@@ -1,14 +1,14 @@
 const Product = require("../models/product.model")
-
+const request = require("express/lib/request")
 exports.getProductService = async (filters, queries) => {
   console.log(queries)
-  const products = await Product.find(filters).skip(queries.skip).limit(queries.limit).select(queries.fields).sort(queries.sortBy);
+  const products = await Product.find({}).populate("created_by")
   const totalProducts = await Product.countDocuments()
   const pageCount = await Math.ceil(totalProducts / queries.limit)
   return { totalProducts, pageCount, products };
 }
 exports.createProductService = async (data) => {
-
+  console.log(request)
   const product = await Product.create(data)
   return product;
 }

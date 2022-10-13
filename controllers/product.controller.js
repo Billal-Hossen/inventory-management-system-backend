@@ -5,7 +5,10 @@ const { getProductService,
   BbulkUpdateProductService,
   deleteSingleProductService,
   BbulkDeleteProductService
-} = require("../services/product.service")
+} = require("../services/product.service");
+
+
+
 module.exports.getAllProducts = async (req, res) => {
   console.log(req.query)
   try {
@@ -62,11 +65,13 @@ module.exports.getAllProducts = async (req, res) => {
 }
 
 module.exports.createProduct = async (req, res, next) => {
-  console.log(req.body)
+
 
   try {
+    req.body.created_by = await req.user._id;
     const result = await createProductService(req.body)
-    console.log(result)
+
+
     if (result) {
       res.status(200).json({
         success: true,

@@ -10,6 +10,8 @@ app.use(cors())
 //Routers
 const UserRouter = require("./routers/user.router")
 const ProductRouter = require("./routers/product.router")
+const OrderRouter = require("./routers/order.router")
+const InvoiceRouter = require("./routers/invoice.router")
 
 
 
@@ -20,6 +22,8 @@ app.get("/", (req, res) => {
 // create product route
 app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/product', ProductRouter)
+app.use('/api/v1/order', OrderRouter)
+app.use('/api/v1/invoice', InvoiceRouter)
 
 
 // exports app module

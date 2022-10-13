@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose")
-const validator = require("validator");
+const valid = require("validator");
 const { ObjectId } = Schema.Types;
 //Product schema
 
@@ -17,6 +17,16 @@ const productSchema = Schema({
     required: [true, "Product description is required."],
 
   },
+  buy_price: {
+    type: Number,
+    required: true,
+    min: [0, "Product price can't be negative"]
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: [0, "Product price can't be negative"]
+  },
 
   unit: {
     type: String,
@@ -26,47 +36,24 @@ const productSchema = Schema({
       message: "Unit must be kg/litter/psc/bag"
     }
   },
-  // imageUrls: [{
-  //   type: String,
-  //   required: true,
-  //   validate: {
-  //     validator: (value) => {
-  //       if (!Array.isArray(value)) {
-  //         return false;
-  //       }
-  //       let isValid = true;
-  //       value.forEach(url => {
-  //         if (!validator.isURL(url)) {
-  //           isValid = false;
-  //         }
-
-  //       })
-  //       return isValid;
-  //     },
-  //     message: "Please provide valid image urls."
-  //   }
-  // }],
+  imageURLs: [{
+    type: String,
+    required: true,
+    validate: [valid.isURL, "wrong url"]
+  }],
 
 
-  quantity: {
+  buy_quantity: {
     type: Number,
     required: true,
-    min: [0, "Quantity can't be negative."],
-    validate: {
-      validator: (value) => {
-        const isInteger = Number.isInteger(value);
-        if (isInteger) {
-          return true
-        }
-        else {
-          return false
-        }
-
-      },
-      message: "Quantity must be an integer."
-    },
-
+    min: [0, "Product of buy quantity can't be negative"]
   },
+  current_quantity: {
+    type: Number,
+    required: true,
+    min: [0, "Product of current  quantity can't be negative"]
+  },
+
 
   status: {
     type: String,
@@ -77,8 +64,9 @@ const productSchema = Schema({
     }
   },
 
-  createdBy: {
-    type: ObjectId,
+  created_by: {
+    type: Schema.Types.ObjectId,
+    required: true,
     ref: "User"
   }
 
