@@ -26,3 +26,23 @@ module.exports.signInService = async (data) => {
   return token;
 
 }
+
+module.exports.getCustomerService = async () => {
+  const result = await User.find({ roles: "customer" }).select("-password")
+  return result;
+}
+module.exports.getSellersService = async () => {
+  const result = await User.find({ roles: "seller" }).select("-password")
+  return result;
+}
+
+exports.deleteSingleCustomerService = async (id) => {
+
+  const result = await User.deleteOne({ _id: id });
+  return result;
+}
+exports.deleteSingleSellerService = async (id) => {
+
+  const result = await User.deleteOne({ _id: id });
+  return result;
+}

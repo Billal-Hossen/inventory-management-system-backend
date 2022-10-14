@@ -1,14 +1,11 @@
 
 const { getProductService,
   createProductService,
-  updateProductService,
-  BbulkUpdateProductService,
   deleteSingleProductService,
-  BbulkDeleteProductService
 } = require("../services/product.service");
 
 
-
+// Get all Product Controller
 module.exports.getAllProducts = async (req, res) => {
   console.log(req.query)
   try {
@@ -64,6 +61,8 @@ module.exports.getAllProducts = async (req, res) => {
   }
 }
 
+
+// Create Product Controller
 module.exports.createProduct = async (req, res, next) => {
 
 
@@ -97,47 +96,8 @@ module.exports.createProduct = async (req, res, next) => {
 
 }
 
-exports.updateSingleProductController = async (req, res) => {
-  try {
-    const { id } = req.params;
 
-    const product = await updateProductService(id, req.body);
-    res.status(200).json({
-      success: true,
-      message: "Updated Successfully."
-    })
-
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Can't updated product",
-      error: error.message
-    })
-  }
-}
-
-
-exports.bulkUpdateProductController = async (req, res) => {
-  try {
-
-
-    const product = await BbulkUpdateProductService(req.body);
-    res.status(200).json({
-      success: true,
-      message: "Updated Successfully."
-    })
-
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Can't updated product",
-      error: error.message
-    })
-  }
-}
-
-
-
+// Delete  Product  By Id Controller
 
 exports.deleteSingleProductController = async (req, res) => {
   try {
@@ -165,23 +125,5 @@ exports.deleteSingleProductController = async (req, res) => {
 }
 
 
-exports.bulkDeleteProductController = async (req, res) => {
-  console.log(req.body.ids)
-  try {
 
-
-    const product = await BbulkDeleteProductService(req.body.ids);
-    res.status(200).json({
-      success: true,
-      message: "Deleted Successfully Products."
-    })
-
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Can't deleted products",
-      error: error.message
-    })
-  }
-}
 

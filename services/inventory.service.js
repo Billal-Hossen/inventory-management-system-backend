@@ -8,7 +8,6 @@ exports.createInventoryService = async (data) => {
 }
 exports.getInventoryService = async () => {
 
-  const inventory = await Inventory.find({}).populate("products")
-
+  const inventory = await Inventory.find({}).select('total_sale total_buy total_profit')
   return inventory;
 }
