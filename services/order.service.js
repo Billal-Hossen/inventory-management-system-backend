@@ -1,6 +1,7 @@
 const Inventory = require("../models/inventory.model");
 const Order = require("../models/order.model");
 const Product = require("../models/product.model");
+const { createInvoiceService } = require("./invoice.service");
 
 exports.createOrderService = async (data) => {
   const { price, unit, sellCount, current_quantity, buy_price } = await Product.findById({ _id: data.productId })
@@ -26,5 +27,20 @@ exports.createOrderService = async (data) => {
   }
   console.log(newInventory)
   const updateInvoice = await Inventory.updateOne({ _id: inventory[0]?._id }, newInventory, { runValidators: true })
+
+  // invoice create 
+  data = {
+    orderId: order._id
+  }
+  const result = await createInvoiceService(data)
+  if (!result) {
+    res.status(200).json({
+      success: true,
+      message: "Invoice is not created Successfully.",
+      data: result
+    })
+  }
+
+
   return order;
 }

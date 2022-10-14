@@ -17,3 +17,11 @@ exports.createInvoiceService = async (data) => {
   const invoice = await Invoice.create(data)
   return invoice;
 }
+
+module.exports.getInvoicesService = async (data) => {
+  console.log(data)
+  const result = await Invoice.find({
+    data
+  })
+  return result;
+}
