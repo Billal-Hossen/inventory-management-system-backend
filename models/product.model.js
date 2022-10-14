@@ -68,6 +68,11 @@ const productSchema = Schema({
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User"
+  },
+  sellCount: {
+    type: Number,
+    default: 0,
+    min: 0
   }
 
 

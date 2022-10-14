@@ -1,5 +1,6 @@
 const Product = require("../models/product.model")
 const request = require("express/lib/request")
+const Inventory = require("../models/inventory.model")
 exports.getProductService = async (filters, queries) => {
   console.log(queries)
   const products = await Product.find({}).populate("created_by")
@@ -8,8 +9,16 @@ exports.getProductService = async (filters, queries) => {
   return { totalProducts, pageCount, products };
 }
 exports.createProductService = async (data) => {
-  console.log(request)
-  const product = await Product.create(data)
+
+  const product = await Product.create(data);
+  const { _id: productId } = product;
+  //update Brand
+  const inventory = await Inventory.find({})
+  const res = await Inventory.updateOne(
+    { _id: inventory[0]._id },
+    { $push: { products: productId } }
+  )
+  console.log(res)
   return product;
 }
 

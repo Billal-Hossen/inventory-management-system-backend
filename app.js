@@ -12,6 +12,7 @@ const UserRouter = require("./routers/user.router")
 const ProductRouter = require("./routers/product.router")
 const OrderRouter = require("./routers/order.router")
 const InvoiceRouter = require("./routers/invoice.router")
+const InventoryRouter = require("./routers/inventory.router")
 
 
 
@@ -24,6 +25,7 @@ app.use('/api/v1/user', UserRouter)
 app.use('/api/v1/product', ProductRouter)
 app.use('/api/v1/order', OrderRouter)
 app.use('/api/v1/invoice', InvoiceRouter)
+app.use('/api/v1/inventory', InventoryRouter)
 
 
 // exports app module
