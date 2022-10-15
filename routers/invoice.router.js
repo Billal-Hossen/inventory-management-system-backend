@@ -1,11 +1,10 @@
 const { CreateInvoiceController, getInvoicesController } = require('../controllers/invoice.controller');
 const authorize = require('../middlewares/authorize');
-const { Customer } = require('../middlewares/cutomer');
-
+const admin = require('../middlewares/admin');
 
 const router = require('express').Router()
 
-router.route('/').post(CreateInvoiceController).get(getInvoicesController)
+router.route('/').get([authorize, admin], getInvoicesController)
 
 
 module.exports = router;

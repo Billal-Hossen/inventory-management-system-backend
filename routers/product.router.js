@@ -15,6 +15,6 @@ router.route("/")
 
 
 router.route('/:id')
-  .delete(deleteSingleProductController)
+  .delete([authorize, admin], deleteSingleProductController)
 
 module.exports = router;

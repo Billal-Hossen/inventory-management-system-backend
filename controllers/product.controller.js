@@ -7,44 +7,8 @@ const { getProductService,
 
 // Get all Product Controller
 module.exports.getAllProducts = async (req, res) => {
-  console.log(req.query)
   try {
-    // Filter part start
-    let filters = { ...req.query }
-    // const excludeFields = []
-    // for (property in filters) {
-    //   if (property !== "status") {
-    //     excludeFields.push(property)
-    //   }
-    // }
-    // excludeFields.forEach(field => delete filters[field])
-    // console.log(filters)
-    const excludeFields = ["sort", "limit", "page"]
-    excludeFields.forEach(field => delete filters[field])
-    let filterString = JSON.stringify(filters)
-    filterString = filterString.replace(/\b(gt|lt|gte|lte)\b/g, match => `$${match}`)
-    filters = JSON.parse(filterString)
-
-    // Filter part end
-    const queries = {}
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ')
-      queries.sortBy = sortBy;
-    }
-    if (req.query.fields) {
-      const fields = req.query.fields.split(',').join(' ')
-      queries.fields = fields;
-    }
-    if (req.query.page) {
-      const { page = 1, limit = 2 } = req.query;
-
-      const skip = (+page - 1) * (+limit)
-      queries.skip = skip
-      queries.limit = (+limit)
-    }
-    console.log(queries)
-
-    const products = await getProductService(filters, queries)
+    const products = await getProductService()
     res.status(200).json({
       success: true,
       data: products,

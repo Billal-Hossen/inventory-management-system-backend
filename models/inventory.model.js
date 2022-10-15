@@ -21,11 +21,7 @@ const inventorySchema = Schema({
     default: 0,
     min: 0
   },
-  sellCount: {
-    type: Number,
-    default: 0,
-    min: 0
-  }
+
 }, { timestamps: true })
 
 const Inventory = model("Inventory", inventorySchema);

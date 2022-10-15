@@ -20,8 +20,17 @@ exports.createInvoiceService = async (data) => {
 
 module.exports.getInvoicesService = async (data) => {
   console.log(data)
-  const result = await Invoice.find({
-    data
-  })
+  let result;
+  // filer by exit customer name or product name
+  if (data.customerName || data.productName) {
+    result = await Invoice.find(
+      { $or: [{ customerName: data.customerName }, { productName: data.productName }] }
+    )
+  } else {
+    // all invoice list
+    result = await Invoice.find({})
+  }
+
+
   return result;
 }
